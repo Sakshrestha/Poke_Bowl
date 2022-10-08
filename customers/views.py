@@ -60,11 +60,16 @@ class Menu(View):
 class CartView(View):
     def get(self, request, *args , **kwasrgs):
         cart_items = Cart.objects.filter(user=request.user)
+        item_count = cart_items.count()
+        total_price = sum(items.item.price for items in cart_items )
         context = {
             'cart_items':cart_items,
+            'item_count': item_count,
+            'total_price': total_price,
         }
 
         return render(request, 'customers/add_to_cart.html',context)      
+
 
 
 class Product_description(View):
@@ -129,3 +134,4 @@ def rate(request, id):
     }
 
     return render(request, 'customers/rate.html',context)
+

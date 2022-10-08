@@ -80,4 +80,13 @@ function updatePrice() {
     
     document.getElementById("item_price").innerText = base_price;
 }
+$(".calculate").change(function() {
+    basePrice=parseFloat(document.getElementById("cartHidden").value);
+    newPrice=basePrice;
+    $(".calculate option:selected").each(function() {
+        newPrice += $(this).data('price')
+    });
+    console.log(newPrice)
+    $("#cartTotal").html(newPrice.toFixed(2));
+});
 
