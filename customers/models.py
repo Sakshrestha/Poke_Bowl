@@ -1,4 +1,6 @@
 
+from email.policy import default
+from pyexpat import model
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -26,14 +28,6 @@ class AddOns(models.Model):
     def __str__(self):
         return self.name
 
-class OrderItem(models.Model):
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    add_ons= models.ManyToManyField(AddOns)
-    def __str__(self):
-        return self.item.name
-
-
-
 class Cart(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE,null=True)
@@ -43,7 +37,15 @@ class Cart(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
     def __str__(self):
         return self.user.username
-   
+
+class Order(models.Model):
+    cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
+    state=models.CharField(max_length=50)
+    city=models.CharField(max_length=50)
+    postal_code=models.CharField(max_length=50)
+    is_payed = models.BooleanField(default=False)
+    is_delivered= models.BooleanField(default=False)
+
     
 
 class Offers(models.Model):

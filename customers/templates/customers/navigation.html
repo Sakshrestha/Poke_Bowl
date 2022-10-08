@@ -90,10 +90,12 @@
                   </g>
                 </svg>
               </a>
-              <form class="form-inline">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
+              <form class="form-inline" action="{% url 'search_results' %}" method="get">
+                <input name="search" type="" class="form-control" id="" placeholder="Search" style="width: 100px;">
+                <button type="submit" class="btn"><i class="fa fa-search" aria-hidden="true" style="color: #ffffff;">
+                </i></button>
+                  
+                
               </form>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -105,7 +107,11 @@
                       {{user.username}}
                     </button>
                     <ul class="dropdown-menu">
+                      {% if user.is_staff %}
+                      <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+                      {% else %}
                       <li><a class="dropdown-item" href="#">Profile</a></li>
+                      {% endif %}
                       <li><a class="dropdown-item" href="#">Oders</a></li>
                       <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>

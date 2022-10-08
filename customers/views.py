@@ -13,6 +13,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -135,3 +136,21 @@ def rate(request, id):
 
     return render(request, 'customers/rate.html',context)
 
+def dashboard(request):
+    return render(request,'customers/dashboard.html')
+
+def search(request):
+
+    results = []
+
+    if request.method == "GET":
+
+        query = request.GET.get('search')
+
+        if query == '':
+
+            query = 'None'
+
+        results = MenuItem.objects.filter(Q(name__icontains=query) | Q(description__icontains=query) | Q(price__icontains=query) )
+
+    return render(request, 'customers/search_results.html', {'query': query, 'results': results})
