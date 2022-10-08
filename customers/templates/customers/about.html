@@ -1,0 +1,54 @@
+{% extends 'customers/base.html' %}
+{%block content%}
+{% load static %}
+  <!-- about section -->
+  {% include 'customers/navigation.html' %}
+
+  <section class="about_section layout_padding">
+    <div class="container  ">
+
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="img-box">
+            <img src="{% static 'images/Build-A-Bowl-FI.webp' %}" alt="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                We Are Pokes
+              </h2>
+            </div>
+            <p>
+             
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam egestas ipsum vitae dui hendrerit, id rhoncus ipsum egestas. Praesent ultricies mollis vehicula. Fusce a odio quis augue cursus pellentesque. Suspendisse eget imperdiet lorem, sit amet pharetra sapien. Phasellus ac ullamcorper quam, ut egestas sapien. Curabitur ultricies condimentum nibh sed molestie. In venenatis massa justo, et tristique ex varius in. Aenean at sapien eros. Maecenas dapibus, odio hendrerit tristique tincidunt, risus lorem consectetur est, tristique semper nibh ex non lectus. Phasellus mi arcu, luctus nec laoreet non, sagittis sit amet quam. Phasellus quis libero nec velit vulputate finibus at quis ante. In non nisi tincidunt, scelerisque libero eget, feugiat ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+<br>
+Integer sodales molestie purus, eget congue orci feugiat in. Etiam vestibulum ornare felis, eget ultricies tortor placerat at. Nam at ipsum non velit egestas ultrices ac nec ex. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque elementum nunc a risus dictum ultrices. Donec finibus, massa quis bibendum imperdiet, quam lorem ornare enim, a eleifend arcu erat facilisis enim. Praesent maximus augue non orci consectetur, eu venenatis eros imperdiet. 
+            </p>
+        
+          </div>
+        </div>
+       
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+          <h2>BUILD A CULTURE </h2>
+          <p>We want to empower people to make healthier lifestyle choices by creating a conversation around health and conscious eating.
+              <br>
+            It's why we've developed our own run club, created a surf team, and have given back to the community through our charitable bowl series. Community engagement is at the core of what we do, and  a great way to bring locals together in support of local charities and to share a post-workout meal.</p>
+        </div>
+        <div class="col-md-6 ">
+          <div class="img-box">
+            <img src="{% static 'images/Build-A-Bowl-FI.webp' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+  </section>
+  {% include 'customers/footer.html' %}
+{%endblock%}

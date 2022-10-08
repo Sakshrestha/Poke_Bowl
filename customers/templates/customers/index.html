@@ -1,0 +1,27 @@
+{% extends 'customers/base.html' %}
+
+{% block content %}
+{% load static %}
+{% include 'customers/navigation.html' %}
+<div class="containerd">
+  <img src="{% static 'images/background.jpg' %}" style="width: 100%;">
+  <p class="centered"><b>Change</b><br>
+    <b>Fast-food</b> <br>
+    <b>Change the</b> <br>
+    <b>culture</b>  <br>
+Get your bowl fixed  now <br>
+  <a  href="{% url 'about' %}">
+    Order Now
+  </a></p>
+</div>
+
+  {% include 'customers/offers_view.html' %}
+  {% include 'customers/menu_view.html' %}
+  {% include 'customers/about_view.html' %}
+  
+
+  {% include 'customers/client.html' %}
+  {% include 'customers/footer.html' %}
+
+
+  {% endblock content %}

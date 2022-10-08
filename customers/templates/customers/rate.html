@@ -1,0 +1,36 @@
+{% extends "customers/base.html" %}
+{% block content %}
+{% include 'customers/navigation.html' %}
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Write a review</h3>
+                </div>
+                <div class="card-body">
+        <form method="POST" novalidate>
+
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="small mb-1">{{field.label}}:</label>
+                        {{ field }}
+                        <small class="text-danger">{{ field.errors|striptags }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-2">Submit Review</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+    {% include 'customers/footer.html' %}
+{% endblock content %}

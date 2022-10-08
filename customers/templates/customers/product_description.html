@@ -1,0 +1,104 @@
+{% extends 'customers/base.html' %}
+{%block content %}
+{%load static%}
+{% include 'customers/navigation.html' %}
+
+  <div class="wrapper">
+    <div class="product-img">
+      <img src="{{product.image.url}}" height="200px" width="200px">
+    </div>
+    <div class="product-info">
+      <div class="product-text">
+        <h1>{{product.name}}</h1>
+        <input type="hidden" value="1" id="quantity">
+        <p>{{product.description}} </p>
+      </div>
+      <button type="button"  class="btn btn-secondary" onclick="document.getElementById('comment').style.display='block'">View Reviews</button>
+      <div class="product-price-btn">
+      <p>$<span>{{product.price}}</span></p>
+      <a onclick="ModelFunction('{{product.price}}')" >
+        <button type="button">Add To Cart</button></a>
+      </div>
+        
+      </div>
+     
+    
+    </div>
+  </div>
+  <div class="modal" id='model' tabindex="-1">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Extra AddOns</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="document.getElementById('model').style.display='none'"></button>
+        </div>
+        
+              <div class="container">
+                <ul class="ks-cboxtags">
+                  {% for ingredient in ingredients %}
+                  <li><input type="checkbox" id={{ingredient.id}} class="item" value={{ingredient.price}} onclick="updatePrice()"><label for={{ingredient.id}}>{{ingredient.name}}  ${{ingredient.price|default:"0"}}</label></li>
+                  {% endfor %}
+                </ul>
+<div class="modal-footer">
+  <p style="margin-right: 10rem; font-family: 'Courier New', Courier, monospace; font-weight: 500; font-size: medium;">Price: $<span  id="item_price"> </span></p>
+  <input type="hidden" value="" id="hidden_price">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('model').style.display='none'">Close</button>
+  <button type="button"  class="btn btn-primary "><a href="{% url 'add_to_cart' product.id %}" > Order</a></button>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+<div class="modal" id='comment' tabindex="-1">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title">Reviews</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="document.getElementById('comment').style.display='none'"></button>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+            <div class="card-body p-4">
+              <div class="form-outline mb-4">
+                <button type="button" class="form-control" placeholder="Type comment..." ><a href="{% url 'rate' product.id%}">Write your review</a></button>
+              </div>
+              {% for review in reviews %}
+              <div class="card mb-4">
+                <div class="card-body">
+                  <p>{{review.comment}}</p>
+                  
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small mb-0 ms-2">{{review.author}}</p>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="small text-muted mb-0">Stars</p>
+                      <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+                      <p class="small text-muted mb-0">{{review.stars}}</p>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('comment').style.display='none'">Close</button>
+<button type="submit"  class="btn btn-primary "><a> Submit</a></button>
+</div>
+
+            </div>
+  </div>
+  </div>
+</div>
+
+
+  {% include 'customers/footer.html' %}
+{%endblock %}
