@@ -1,62 +1,57 @@
 {% extends 'customers/base.html' %}
 {%block content %}
 {% include 'customers/navigation.html' %}
-  <section class="h-100 h-custom" style="background-color: #d2c9ff;" >
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-            <div class="card-body p-0">
-              <div class="row g-0">
-                <div class="col-lg-8">
-                  <div class="p-5">
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                      <h1 class="fw-bold mb-0 text-black">User Orders</h1>
-                      <h6 class="mb-0 text-muted">{{item_count}} items</h6>
-                    </div>
-                    {% for item in cart_items %}
-                    <hr class="my-4">
-  
-                    <div class="row mb-4 d-flex justify-content-between align-items-center">
-                      <div class="col-md-2 col-lg-2 col-xl-2">
-                        <img
-                          src="{{item.item.image.url}}"
-                          class="img-fluid rounded-3" alt="Cotton T-shirt">
-                      </div>
-                      <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-black mb-0">{{item.item.name}}</h6>
-                      </div>
-                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                        <button class="btn btn-link px-2">
-                          <a href="{% url 'remove' item.id %}"> <i class="fas fa-minus"></i></a>
-                        </button>
-  
-                       
-                      </div>
-                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                        <h6 class="mb-0" id="unit_price">${{item.item.price}}</h6>
-                      </div>
-                      
-                    </div>
-                    {% endfor %}
+<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<style>
+
+.icon-1x {
+    font-size: 24px !important;
+}
+a{
+    text-decoration:none;    
+}
+.text-primary, a.text-primary:focus, a.text-primary:hover {
+    color: #00ADBB!important;
+}
+.text-black, .text-hover-black:hover {
+    color: #000 !important;
+}
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+</style>
+<div class="container">
+      <div class="row">
+        <!-- Main content -->
+        <div class="col-lg-9 mb-3">
+
+         {% if orders %}
+          {% for items in orders %}
+          <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+            <div class="row align-items-center">
+              <div class="col-md-8 mb-3 mb-sm-0">
+                <h5>
+                  <a href="#" class="text-primary">{{items.cart.user}}</a>
+                </h5>
+                <p class="text-sm"><span class="op-6">Posted</span> <a class="text-black" href="#">{{items.cart.created_on|timesince}}</a> <span class="op-6">ago by</span> <a class="text-black" href="#">KenyeW</a></p>
+                <div class="text-sm op-5"> <a class="text-black mr-2" href="#">#C++</a> <a class="text-black mr-2" href="#">#AppStrap Theme</a> <a class="text-black mr-2" href="#">#Wordpress</a> </div>
+              </div>
+              <div class="col-md-4 op-7">
+                <div class="row text-center op-7">
+                  <div class="col px-1"> <i class="ion-connection-bars icon-1x"></i> <span class="d-block text-sm">Payed</span> </div>
+                  <div class="col px-1"> <i class="ion-ios-chatboxes-outline icon-1x"></i> <span class="d-block text-sm">Delivered</span> </div>
                   
-                    <hr class="my-4">
-  
-                    <div class="pt-5">
-                      <h6 class="mb-0"><a href="{% url 'menu' %}" class="text-body"><i
-                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
-                    </div>
-                  </div>
-                </div>
-                
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          {% endfor %}
+          {% else %}
+          <h2>No orders</h2>
+
+          {% endif %}
+         
       </div>
     </div>
-   
-  </section>
 
   {%endblock %}

@@ -201,6 +201,11 @@ a:focus {
   color: #ffbe33;
 }
 
+.search-hover:hover {
+  width: 100px;
+  padding-left: 50px;
+}
+
 .custom_nav-container .nav_search-btn {
   width: auto;
   height: auto;

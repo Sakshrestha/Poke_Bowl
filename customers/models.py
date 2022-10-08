@@ -38,6 +38,10 @@ class Cart(models.Model):
     def __str__(self):
         return self.user.username
 
+    @property
+    def time_diff(self):
+        return timezone.now() - self.created_on
+
 class Order(models.Model):
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
     state=models.CharField(max_length=50)

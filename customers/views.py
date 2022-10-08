@@ -2,7 +2,7 @@ from random import random
 from statistics import quantiles
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
-from .models import AddOns, Cart, MenuItem, Category , AddOns,Offers,Review
+from .models import AddOns, Cart, MenuItem, Category , AddOns,Offers, Order,Review
 from .models import Cart as Product
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
@@ -137,7 +137,11 @@ def rate(request, id):
     return render(request, 'customers/rate.html',context)
 
 def dashboard(request):
-    return render(request,'customers/dashboard.html')
+    orders = Order.objects.all()
+    context = {
+        'orders':orders,
+    }
+    return render(request,'customers/dashboard.html',context)
 
 def search(request):
 
