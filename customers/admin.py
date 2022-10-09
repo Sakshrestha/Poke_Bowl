@@ -7,5 +7,6 @@ admin.site.register(Category)
 admin.site.register(Cart)
 admin.site.register(Offers)
 admin.site.register(Order)
+
 admin.site.register(AddOns)
 admin.site.register(Review)

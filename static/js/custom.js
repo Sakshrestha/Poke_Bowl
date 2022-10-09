@@ -18,15 +18,31 @@ $(window).on('load', function () {
             columnWidth: ".all"
         }
     })
+   
     
 });
+
 
 $(document).ready(function() {
     $(".dropdown-toggle").dropdown();
     $('#rateMe3').mdbRate();
 });
-
-
+$('.btnNext').click(function() {
+    $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+});
+$(function () {
+    // this will get the full URL at the address bar
+    var url = window.location.href;
+    // passes on every "a" tag
+    $(".navbar-nav .nav-link").each(function () {
+      // checks if its the same on the address bar
+      if (url == (this.href)) {
+        $(this).closest("li").addClass("active");
+        //for making parent of submenu active
+        $(this).closest("li").parent().parent().addClass("active");
+      }
+    });
+  });
 // nice select
 $(document).ready(function() {
     $('select').niceSelect();
@@ -66,6 +82,7 @@ function ModelFunction(price){
     document.getElementById('hidden_price').value = price;
     updatePrice();
 }
+
 
 function updatePrice() {
     let base_price = parseFloat(document.getElementById("hidden_price").value);

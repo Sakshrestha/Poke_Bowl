@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from random import random
 from statistics import quantiles
 from django.shortcuts import render,redirect,get_object_or_404
@@ -6,7 +7,7 @@ from .models import AddOns, Cart, MenuItem, Category , AddOns,Offers, Order,Revi
 from .models import Cart as Product
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import UserRegistrationForm,ReviewForm
+from .forms import OrderForm, UserRegistrationForm,ReviewForm
 from django.http import JsonResponse,HttpResponseRedirect
 from django.core.serializers import serialize
 from django.shortcuts import render, redirect
@@ -62,16 +63,27 @@ class CartView(View):
     def get(self, request, *args , **kwasrgs):
         cart_items = Cart.objects.filter(user=request.user)
         item_count = cart_items.count()
-        total_price = sum(items.item.price for items in cart_items )
+        total_price = sum(items.items.price for items in cart_items )
         context = {
             'cart_items':cart_items,
             'item_count': item_count,
             'total_price': total_price,
         }
 
-        return render(request, 'customers/add_to_cart.html',context)      
+        return render(request, 'customers/add_to_cart.html',context)   
 
+    def post(self, request, *args , **kwargs):
+        cart = Cart.objects.get(user=request.user)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            state = request.POST.get('state')
+            city = request.POST.get('city')
+            postal_code = request.POST.get('postal_code')
+            order = Order(cart=cart, state=state,  city=city , postal_code=postal_code,is_payed=True)
+            order.save()
+            return render(request,'customers/index.html',{'alert':"Your order will be delivered soon."})
 
+        return render(request, 'customers/add_to_cart.html')
 
 class Product_description(View):
     def get(self, request,id):
@@ -104,8 +116,7 @@ def register(request):
 @login_required
 def add_to_cart(request, id):
     item = get_object_or_404(MenuItem,id=id)
-    
-    cart = Cart.objects.create(user=request.user, item=item,price=item.price)
+    cart = Cart.objects.create(user=request.user, items=item,price=item.price)
     cart.save()
     messages.success(request,'Added to cart')
     return redirect('cart')
@@ -116,7 +127,7 @@ def remove_from_cart(request, id):
     messages.success(request,'REmoved fromo cart')
     return redirect('cart')
 
-
+@login_required
 def rate(request, id):
     post = MenuItem.objects.get(id=id)
     form = ReviewForm(request.POST or None)
@@ -136,12 +147,21 @@ def rate(request, id):
 
     return render(request, 'customers/rate.html',context)
 
-def dashboard(request):
-    orders = Order.objects.all()
-    context = {
-        'orders':orders,
-    }
-    return render(request,'customers/dashboard.html',context)
+class Dashboard(View):
+    def get(self, request, *args , **kwargs):
+        orders = Order.objects.all()
+        context = {
+            'orders':orders,
+        }
+        return render(request,'customers/dashboard.html',context)
+    def post(self, request, *args , **kwargs):
+        id= request.POST.get('id')
+        order = Order.objects.get(id=id)
+        delivered = request.POST.get('delivered')
+        if delivered == "on":
+            order.is_delivered =  True
+            order.save()
+        return redirect('dashboard')
 
 def search(request):
 

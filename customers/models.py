@@ -28,16 +28,22 @@ class AddOns(models.Model):
     def __str__(self):
         return self.name
 
+
 class Cart(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
-    item = models.ForeignKey(MenuItem, on_delete=models.CASCADE,null=True)
+    items = models.ForeignKey(MenuItem,on_delete=models.CASCADE,null=True)
     add_ons= models.ManyToManyField(AddOns)
     quantity = models.IntegerField(default=1)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True)
-    price = models.DecimalField(max_digits=5,decimal_places=2)
+    price = models.DecimalField(max_digits=5,decimal_places=2,null=True)
     def __str__(self):
         return self.user.username
 
+    @property
+    def total_price(self):
+        for menu in self.item:
+            price += menu.price
+        return price
     @property
     def time_diff(self):
         return timezone.now() - self.created_on

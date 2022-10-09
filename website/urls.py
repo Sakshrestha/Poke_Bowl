@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import customers
-from customers.views import CartView, Index,dashboard ,About, Menu,rate,Product_description,register,Offers_view,add_to_cart, remove_from_cart, search
+from customers.views import CartView, Dashboard, Index ,About, Menu,rate,Product_description,register,Offers_view,add_to_cart, remove_from_cart, search
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
@@ -32,7 +32,7 @@ urlpatterns = [
     path('cart/',login_required(CartView.as_view()), name='cart'),
     path('about/',About.as_view(), name='about'),
     path('offers/',Offers_view.as_view(), name='offers'),
-    path("dashboard/", dashboard, name="dashboard"),
+    path("dashboard/", Dashboard.as_view(), name="dashboard"),
     path("search/", search, name="search_results"),
     path('rate/<int:id>',rate,name="rate"),
     path('product/<int:id>',Product_description.as_view(), name='product'),
