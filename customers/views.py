@@ -73,15 +73,16 @@ class CartView(View):
         return render(request, 'customers/add_to_cart.html',context)   
 
     def post(self, request, *args , **kwargs):
-        cart = Cart.objects.get(user=request.user)
+        cart = Cart.objects.filter(user=request.user)
         form = OrderForm(request.POST)
-        if form.is_valid():
-            state = request.POST.get('state')
-            city = request.POST.get('city')
-            postal_code = request.POST.get('postal_code')
-            order = Order(cart=cart, state=state,  city=city , postal_code=postal_code,is_payed=True)
-            order.save()
-            return render(request,'customers/index.html',{'alert':"Your order will be delivered soon."})
+        for items in cart:
+            if form.is_valid():
+                state = request.POST.get('state')
+                city = request.POST.get('city')
+                postal_code = request.POST.get('postal_code')
+                order = Order(cart=items, state=state,  city=city , postal_code=postal_code,is_payed=True)
+                order.save()
+                return render(request,'customers/index.html',{'alert':"Your order will be delivered soon."})
 
         return render(request, 'customers/add_to_cart.html')
 
