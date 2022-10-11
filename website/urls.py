@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 urlpatterns = [
@@ -32,7 +33,7 @@ urlpatterns = [
     path('cart/',login_required(CartView.as_view()), name='cart'),
     path('about/',About.as_view(), name='about'),
     path('offers/',Offers_view.as_view(), name='offers'),
-    path("dashboard/", Dashboard.as_view(), name="dashboard"),
+    path("dashboard/", staff_member_required(Dashboard.as_view()), name="dashboard"),
     path("search/", search, name="search_results"),
     path('rate/<int:id>',rate,name="rate"),
     path('product/<int:id>',Product_description.as_view(), name='product'),
